@@ -41,6 +41,9 @@ export function useClerkSupabaseClient() {
       async accessToken() {
         return (await getToken()) ?? null;
       },
+      db: {
+        schema: "public",
+      },
       global: {
         headers: {
           Accept: "application/json",

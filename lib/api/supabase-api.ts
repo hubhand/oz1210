@@ -55,13 +55,11 @@ export async function getUserFromClerkId(
       .from("users")
       .select("id")
       .eq("clerk_id", clerkId)
-      .single();
+      .maybeSingle();
 
     if (error) {
-      // PGRST116: 레코드를 찾을 수 없음 (정상적인 상황일 수 있음)
-      if (error.code === "PGRST116") {
-        return null;
-      }
+      // maybeSingle()은 결과가 없을 때 null을 반환하므로 PGRST116 체크 불필요
+      // 다른 에러만 처리
 
       // 다른 에러는 상세 정보와 함께 로깅
       console.error("getUserFromClerkId error:", {
@@ -104,13 +102,11 @@ export async function getBookmark(
       .select("*")
       .eq("user_id", userId)
       .eq("content_id", contentId)
-      .single();
+      .maybeSingle();
 
     if (error) {
-      // 북마크가 없는 경우 (PGRST116)는 정상적인 상황
-      if (error.code === "PGRST116") {
-        return null;
-      }
+      // maybeSingle()은 결과가 없을 때 null을 반환하므로 PGRST116 체크 불필요
+      // 다른 에러만 처리
       console.error("getBookmark error:", error);
       return null;
     }
