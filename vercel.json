@@ -5,5 +5,5 @@
       "NODE_VERSION": "20.x"
     }
   },
-  "installCommand": "corepack enable && pnpm install"
+  "installCommand": "corepack enable && corepack prepare pnpm@7.33.7 --activate && pnpm install"
 }
