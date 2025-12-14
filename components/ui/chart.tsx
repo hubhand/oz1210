@@ -157,6 +157,7 @@ type ChartTooltipContentProps = {
   hideIndicator?: boolean;
   nameKey?: string;
   labelKey?: string;
+  children?: React.ReactNode;
 };
 
 function ChartTooltipContent(props: ChartTooltipContentProps) {
@@ -174,6 +175,7 @@ function ChartTooltipContent(props: ChartTooltipContentProps) {
     color,
     nameKey,
     labelKey,
+    children,
   } = props;
   const { config } = useChart();
 
@@ -212,6 +214,20 @@ function ChartTooltipContent(props: ChartTooltipContentProps) {
     config,
     labelKey,
   ]);
+
+  // children이 있으면 children을 우선 렌더링
+  if (children) {
+    return (
+      <div
+        className={cn(
+          "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
+          className,
+        )}
+      >
+        {children}
+      </div>
+    );
+  }
 
   if (!active || !payload?.length) {
     return null;
