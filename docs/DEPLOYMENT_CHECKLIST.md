@@ -47,6 +47,7 @@
 - **발급 방법**: https://dashboard.clerk.com/ → API Keys → Publishable key
 - **보안 수준**: 공개 키 (클라이언트 노출 가능)
 - **필수 여부**: 필수
+- **⚠️ 중요**: 프로덕션 배포 시 반드시 **Production** 키를 사용해야 합니다. Development 키는 사용 제한이 있고 프로덕션에서 사용하면 안 됩니다.
 
 #### CLERK_SECRET_KEY
 
@@ -54,8 +55,24 @@
 - **발급 방법**: https://dashboard.clerk.com/ → API Keys → Secret key
 - **보안 수준**: ⚠️ 시크릿 키 (절대 클라이언트 노출 금지!)
 - **필수 여부**: 필수
+- **⚠️ 중요**: 프로덕션 배포 시 반드시 **Production** 키를 사용해야 합니다.
 
 **설정 위치**: Vercel Dashboard → Settings → Environment Variables
+
+**⚠️ Production 키 설정 방법**:
+
+1. [Clerk Dashboard](https://dashboard.clerk.com/) 접속
+2. 프로젝트 선택
+3. **API Keys** 메뉴 클릭
+4. **Keys** 탭에서 **Production** 환경 확인
+5. **Production Publishable Key**와 **Production Secret Key** 복사
+6. Vercel Dashboard → Settings → Environment Variables에서:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` → Production Publishable Key로 설정
+   - `CLERK_SECRET_KEY` → Production Secret Key로 설정
+7. 환경 변수 저장 후 **재배포** (Redeploy)
+
+**경고 메시지 확인**:
+- 브라우저 콘솔에서 "Clerk has been loaded with development keys" 경고가 보이면 Production 키로 변경이 필요합니다.
 
 ---
 
