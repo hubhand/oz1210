@@ -11,7 +11,7 @@
 !.yarn/versions
 
 # pnpm
-pnpm-lock.yaml
+# pnpm-lock.yaml  # Git에 커밋해야 함 (의존성 버전 고정)
 
 # testing
 /coverage

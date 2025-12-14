@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "build": {
     "env": {
-      "NODE_VERSION": "20.x"
+      "NODE_VERSION": "18.x"
     }
   },
   "installCommand": "corepack enable && corepack prepare pnpm@7.33.7 --activate && pnpm install"
