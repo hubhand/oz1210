@@ -2,12 +2,17 @@
   "name": "saas-mini-course",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "dev:clean": "rimraf .next && next dev",
     "clean": "rimraf .next",
     "clean:all": "rimraf .next node_modules/.cache",
-    "build": "next build",
+    "build": "next build --webpack",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
