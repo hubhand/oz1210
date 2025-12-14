@@ -82,7 +82,10 @@ Vercel은 Next.js 프로젝트를 자동으로 감지합니다.
 - [ ] Build Command가 `pnpm build`인가?
 - [ ] Install Command가 `pnpm install`인가?
 
-**참고**: `package.json`에 `engines` 필드가 있으면 Node.js 버전이 자동으로 설정됩니다.
+**참고**: 
+- `package.json`에 `engines` 필드가 있으면 Node.js 버전이 자동으로 설정됩니다.
+- `vercel.json` 파일이 프로젝트 루트에 있으면 Vercel이 해당 설정을 사용합니다.
+  - 현재 설정: Node.js 18.x, pnpm 7.33.7 (Corepack 사용)
 
 ### 4. 환경변수 설정 (다음 단계에서 상세 설명)
 
