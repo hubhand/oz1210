@@ -74,9 +74,21 @@ export async function DetailMap({ contentId }: DetailMapProps) {
     return null;
   }
 
-  // 좌표 정보가 없으면 섹션 숨김
+  // 좌표 정보가 없으면 안내 메시지 표시
   if (!detail.mapx || !detail.mapy) {
-    return null;
+    return (
+      <section
+        className="rounded-lg border bg-card p-4 md:p-6 space-y-4"
+        aria-labelledby="map-heading"
+      >
+        <h2 id="map-heading" className="text-xl md:text-2xl font-bold">
+          위치
+        </h2>
+        <div className="flex items-center justify-center py-8 text-muted-foreground">
+          <p>위치 정보가 제공되지 않습니다.</p>
+        </div>
+      </section>
+    );
   }
 
   return (

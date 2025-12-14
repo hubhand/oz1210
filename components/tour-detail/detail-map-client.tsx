@@ -95,13 +95,19 @@ export function DetailMapClient({
 
   // 좌표 파싱
   useEffect(() => {
+    console.group("상세 페이지 지도 - 좌표 파싱");
+    console.log("입력 좌표:", { mapx, mapy });
     const coord = parseCoordinates(mapx, mapy);
     if (!coord) {
+      console.error("좌표 파싱 실패:", { mapx, mapy });
       setError(new Error("유효하지 않은 좌표입니다."));
       setIsLoading(false);
+      console.groupEnd();
       return;
     }
+    console.log("파싱된 좌표:", coord);
     setCoordinates(coord);
+    console.groupEnd();
   }, [mapx, mapy]);
 
   // 네이버 지도 API 스크립트 로드
@@ -194,20 +200,33 @@ export function DetailMapClient({
 
   // 지도 초기화 및 마커 표시
   useEffect(() => {
+    console.group("상세 페이지 지도 - 초기화");
+    console.log("조건 확인:", {
+      scriptLoaded,
+      hasContainer: !!mapContainerRef.current,
+      hasCoordinates: !!coordinates,
+      hasMapInstance: !!mapInstanceRef.current,
+    });
+
     if (
       !scriptLoaded ||
       !mapContainerRef.current ||
       !coordinates ||
       mapInstanceRef.current
     ) {
+      console.log("초기화 조건 불만족, 대기 중...");
+      console.groupEnd();
       return;
     }
 
     try {
+      console.log("지도 초기화 시작...", { coordinates });
       const naver = window.naver;
       if (!naver || !naver.maps) {
+        console.error("네이버 지도 API를 사용할 수 없습니다.");
         setError(new Error("네이버 지도 API를 사용할 수 없습니다."));
         setIsLoading(false);
+        console.groupEnd();
         return;
       }
 
@@ -281,13 +300,16 @@ export function DetailMapClient({
       infoWindowRef.current = infoWindow;
       markerRef.current = marker;
 
+      console.log("지도 초기화 완료");
       setIsLoading(false);
+      console.groupEnd();
     } catch (err) {
       console.error("지도 초기화 에러:", err);
       setError(
         err instanceof Error ? err : new Error("지도를 초기화할 수 없습니다."),
       );
       setIsLoading(false);
+      console.groupEnd();
     }
   }, [scriptLoaded, coordinates, title, address]);
 
@@ -325,7 +347,12 @@ export function DetailMapClient({
 
   // 좌표가 없는 경우
   if (!coordinates) {
-    return null;
+    console.warn("상세 페이지 지도 - 좌표가 없습니다.");
+    return (
+      <div className="flex items-center justify-center py-8 text-muted-foreground">
+        <p>유효한 위치 정보가 없습니다.</p>
+      </div>
+    );
   }
 
   return (
