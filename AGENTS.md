@@ -132,22 +132,48 @@ supabase/migrations/20241030014800_create_users_table.sql
 
 ## Environment Variables
 
-`.env.example` 참고하여 `.env` 파일 생성:
+### 환경 변수 설정
+
+프로젝트 루트의 `.env.example` 파일을 참고하여 `.env` 파일을 생성하고 환경 변수를 설정하세요.
+
+**빠른 시작**:
 
 ```bash
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
-NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+# .env.example 파일 복사
+cp .env.example .env
 
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-NEXT_PUBLIC_STORAGE_BUCKET=uploads
+# .env 파일 편집하여 실제 값 입력
 ```
+
+**필수 환경 변수**:
+
+- `NEXT_PUBLIC_TOUR_API_KEY`: 한국관광공사 API 키
+- `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID`: 네이버 지도 API Client ID
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Clerk 공개 키
+- `CLERK_SECRET_KEY`: Clerk 시크릿 키 (서버 전용)
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase 프로젝트 URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase 공개 키
+- `SUPABASE_SERVICE_ROLE_KEY`: Supabase 서비스 역할 키 (서버 전용)
+
+**선택 환경 변수** (기본값 사용 가능):
+
+- `NEXT_PUBLIC_STORAGE_BUCKET`: Supabase Storage 버킷 이름 (기본값: `uploads`)
+- `NEXT_PUBLIC_SITE_URL`: 프로덕션 사이트 URL (기본값: `https://my-trip.vercel.app`)
+- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`: 로그인 페이지 URL (기본값: `/sign-in`)
+- `NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL`: 로그인 후 리다이렉트 URL (기본값: `/`)
+- `NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL`: 회원가입 후 리다이렉트 URL (기본값: `/`)
+
+**상세 가이드**:
+
+- 모든 환경 변수 목록: `.env.example` 파일 참고
+- 프로덕션 배포 시 설정: `docs/ENV_SETUP.md` 참고
+- 각 환경 변수 발급 방법: `docs/ENV_SETUP.md` 참고
+
+**보안 주의사항**:
+
+- ⚠️ `.env` 파일은 절대 Git에 커밋하지 마세요!
+- ⚠️ `NEXT_PUBLIC_` 접두사가 있는 환경 변수는 클라이언트 번들에 포함됩니다.
+- ⚠️ 서버 전용 환경 변수(`CLERK_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`)는 절대 클라이언트에 노출되면 안됩니다!
 
 ## Development Guidelines
 

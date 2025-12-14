@@ -221,34 +221,55 @@ pnpm install
 
 **6-2. .env 파일 생성**
 
-프로젝트 루트에 `.env` 파일을 생성하고 다음 환경 변수를 설정하세요:
+프로젝트 루트에 `.env` 파일을 생성하고 환경 변수를 설정하세요:
 
-**6-3. Supabase 환경 변수 설정**
+```bash
+# Windows (PowerShell)
+Copy-Item .env.example .env
 
-1. Supabase Dashboard → **Settings** → **API**
-2. 다음 값들을 복사하여 `.env` 파일에 입력:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL="https://xxxxxxxxxxxxx.supabase.co"
-   NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-   SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-   NEXT_PUBLIC_STORAGE_BUCKET="uploads"
-   ```
+# macOS/Linux
+cp .env.example .env
+```
 
-> **⚠️ 주의**: `SUPABASE_SERVICE_ROLE_KEY`는 모든 RLS를 우회하는 관리자 권한이므로 절대 공개하지 마세요!
+**6-3. 환경 변수 설정**
 
-**6-4. Clerk 환경 변수 설정**
+`.env` 파일을 열고 각 환경 변수에 실제 값을 입력하세요. 각 환경 변수의 발급 방법은 [환경변수 설정 가이드](docs/ENV_SETUP.md)를 참고하세요.
 
-1. Clerk Dashboard → **API Keys**
-2. 다음 값들을 복사하여 `.env` 파일에 입력:
-   ```env
-   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
-   CLERK_SECRET_KEY="sk_test_..."
-   NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
-   NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL="/"
-   NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL="/"
-   ```
+**필수 환경 변수**:
 
-> 💡 **참고**: 환경 변수 예시는 프로젝트 루트의 `.env.example` 파일을 참고하세요.
+1. **한국관광공사 API**
+
+   - `NEXT_PUBLIC_TOUR_API_KEY`: 공공데이터포털(data.go.kr)에서 발급
+   - 발급 방법: https://www.data.go.kr/data/15101578/openapi.do
+
+2. **네이버 지도 API**
+
+   - `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID`: 네이버 클라우드 플랫폼(NCP)에서 발급
+   - 발급 방법: https://www.ncloud.com/ (Web Dynamic Map 서비스 활성화 필요)
+
+3. **Supabase**
+
+   - `NEXT_PUBLIC_SUPABASE_URL`: Supabase Dashboard → Settings → API
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase Dashboard → Settings → API
+   - `SUPABASE_SERVICE_ROLE_KEY`: Supabase Dashboard → Settings → API
+   - `NEXT_PUBLIC_STORAGE_BUCKET`: 기본값 `uploads` 사용 가능
+
+4. **Clerk 인증**
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Clerk Dashboard → API Keys
+   - `CLERK_SECRET_KEY`: Clerk Dashboard → API Keys
+
+**선택 환경 변수** (기본값 사용 가능):
+
+- `NEXT_PUBLIC_SITE_URL`: 프로덕션 사이트 URL (기본값: `https://my-trip.vercel.app`)
+- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`: 로그인 페이지 URL (기본값: `/sign-in`)
+- `NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL`: 로그인 후 리다이렉트 URL (기본값: `/`)
+- `NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL`: 회원가입 후 리다이렉트 URL (기본값: `/`)
+
+> 💡 **참고**:
+>
+> - 모든 환경 변수 목록과 상세 가이드는 프로젝트 루트의 `.env.example` 파일을 참고하세요.
+> - 프로덕션 배포 시 환경 변수 설정 방법은 [환경변수 설정 가이드](docs/ENV_SETUP.md)를 참고하세요.
+> - ⚠️ **보안 주의**: `.env` 파일은 절대 Git에 커밋하지 마세요! `.env.example` 파일만 커밋하세요.
 
 #### 7. Cursor MCP 설정 (선택사항)
 
@@ -314,6 +335,50 @@ pnpm start
 
 # 린팅
 pnpm lint
+```
+
+## 배포
+
+### Vercel 배포
+
+이 프로젝트는 Vercel에 배포할 수 있습니다.
+
+**배포 상태**: [![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/my-trip)
+
+#### 빠른 시작
+
+1. **Vercel 프로젝트 생성**
+
+   - [배포 가이드](./docs/DEPLOYMENT_GUIDE.md) 참고
+
+2. **환경변수 설정**
+
+   - [배포 체크리스트](./docs/DEPLOYMENT_CHECKLIST.md) 참고
+   - Vercel Dashboard → Settings → Environment Variables
+
+3. **배포 확인**
+   - [배포 후 테스트 체크리스트](./docs/DEPLOYMENT_TEST_CHECKLIST.md) 참고
+
+#### 배포 관련 문서
+
+- [배포 가이드](./docs/DEPLOYMENT_GUIDE.md) - Vercel 프로젝트 생성, 환경변수 설정, 첫 배포 방법
+- [배포 체크리스트](./docs/DEPLOYMENT_CHECKLIST.md) - 필수 환경변수 목록 및 Vercel Dashboard 설정 방법
+- [배포 후 테스트 체크리스트](./docs/DEPLOYMENT_TEST_CHECKLIST.md) - 기능 테스트, 성능 확인, 에러 처리 확인 항목
+- [환경변수 설정 가이드](./docs/ENV_SETUP.md) - 환경변수 발급 방법
+
+#### 빌드 테스트
+
+배포 전에 로컬에서 빌드 테스트를 실행하세요:
+
+```bash
+# Windows
+powershell -ExecutionPolicy Bypass -File scripts/test-build.ps1
+
+# Unix/Linux/macOS
+bash scripts/test-build.sh
+
+# 또는 직접 빌드
+pnpm build
 ```
 
 ## 추가 설정 및 팁
