@@ -128,6 +128,7 @@ export function TypeChartClient({ typeStats }: TypeChartClientProps) {
             labelLine={false}
             role="img"
             aria-label="타입별 관광지 분포 차트"
+            // @ts-expect-error - activeIndex는 recharts에서 지원되지만 타입 정의에 없음
             activeIndex={activeIndex}
             activeShape={
               {
