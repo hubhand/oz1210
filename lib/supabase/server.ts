@@ -40,7 +40,18 @@ export async function createClient() {
 
   return createSupabaseClient(supabaseUrl, supabaseKey, {
     async accessToken() {
-      return (await auth()).getToken();
+      try {
+        const authInstance = await auth();
+        if (!authInstance) {
+          return null;
+        }
+        const token = await authInstance.getToken();
+        return token || null;
+      } catch (error) {
+        // Realtime 연결 실패 시에도 앱이 계속 작동하도록 null 반환
+        console.error("Failed to get access token for Supabase Realtime:", error);
+        return null;
+      }
     },
   });
 }
@@ -49,13 +60,24 @@ export async function createClient() {
  * @deprecated Supabase 공식 패턴을 사용하세요: `await createClient()`
  * 하위 호환성을 위해 유지됩니다.
  */
-export function createClerkSupabaseClient() {
+export async function createClerkSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
   return createSupabaseClient(supabaseUrl, supabaseKey, {
     async accessToken() {
-      return (await auth()).getToken();
+      try {
+        const authInstance = await auth();
+        if (!authInstance) {
+          return null;
+        }
+        const token = await authInstance.getToken();
+        return token || null;
+      } catch (error) {
+        // Realtime 연결 실패 시에도 앱이 계속 작동하도록 null 반환
+        console.error("Failed to get access token for Supabase Realtime:", error);
+        return null;
+      }
     },
   });
 }

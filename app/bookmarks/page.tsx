@@ -49,6 +49,9 @@ export const metadata: Metadata = {
   description: "북마크한 관광지 목록을 확인하세요.",
 };
 
+// 동적 렌더링 강제 (headers() 사용으로 인해 정적 렌더링 불가)
+export const dynamic = "force-dynamic";
+
 /**
  * 북마크 목록 페이지 메인 컴포넌트
  * @param {Object} props - 페이지 props

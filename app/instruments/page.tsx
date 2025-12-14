@@ -1,6 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { Suspense } from "react";
 
+// 동적 렌더링 강제 (headers() 사용으로 인해 정적 렌더링 불가)
+export const dynamic = "force-dynamic";
+
 /**
  * Supabase 공식 Next.js 가이드 예시 페이지
  *
